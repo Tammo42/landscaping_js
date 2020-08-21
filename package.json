@@ -1,28 +1,38 @@
 {
-  "name": "landscaping_js",
-  "version": "0.0.1",
-  "description": "This shall be pretty.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Tammo42/landscaping_js.git"
-  },
-  "keywords": [
-    "perlin",
-    "game",
-    "3d",
-    "threejs"
-  ],
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Tammo42/landscaping_js/issues"
-  },
-  "homepage": "https://github.com/Tammo42/landscaping_js#readme",
-  "dependencies": {
-    "three": "^0.119.1"
-  }
+    "name": "landscaping_js",
+    "version": "0.0.1",
+    "description": "This shall be pretty.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Tammo42/landscaping_js.git"
+    },
+    "keywords": [
+        "perlin",
+        "game",
+        "3d",
+        "threejs"
+    ],
+    "author": "",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Tammo42/landscaping_js/issues"
+    },
+    "homepage": "https://github.com/Tammo42/landscaping_js#readme",
+    "dependencies": {
+        "three": "^0.119.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.2.2",
+        "@babel/preset-env": "^7.3.1",
+        "babel-loader": "^8.0.5",
+        "ts-loader": "^8.0.2",
+        "typescript": "^4.0.2",
+        "webpack": "^4.44.1",
+        "webpack-cli": "^3.2.1",
+        "webpack-dev-server": "^3.1.14"
+    }
 }
