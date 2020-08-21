@@ -51,10 +51,7 @@ uniform float maxHeight;
 
 void main() {
     z = position.z;
-    if (z < -0.2) {
-        z = -0.2;
-    }
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xy, z, 1.0);
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xy, clamp(z, -0.2, 200.0), 1.0);
     z = z / maxHeight;
 }
 `;
@@ -65,7 +62,8 @@ varying float z;
 
 void main() {
     vec3 step_color;
-    step_color = mix(vec3(0.0, 0.0, 1.0), vec3(1.0, 1.0 , 0.0), smoothstep(0.0, 0.1, z));
+    step_color = mix(vec3(0.0, 0.0 , 0.1), vec3(0.0, 0.0, 1.0), smoothstep(-0.6, 0.0, z));
+    step_color = mix(step_color, vec3(1.0, 1.0 , 0.0), smoothstep(0.0, 0.1, z));
     step_color = mix(step_color, vec3(0.0, 1.0, 0.0), smoothstep(0.1, 0.2, z));
     step_color = mix(step_color, vec3(0.5, 0.5, 0.5), smoothstep(0.2, 0.5, z));
     step_color = mix(step_color, vec3(1.0, 1.0, 1.0), smoothstep(0.5, 0.7, z));
