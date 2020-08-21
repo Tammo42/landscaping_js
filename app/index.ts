@@ -32,17 +32,64 @@ const line = new THREE.Line(line_geometry, line_material);
 
 scene.add(line);
 
-const plane_geometry = new THREE.PlaneGeometry(100, 100, 100, 100);
-const plane_material = new THREE.MeshPhongMaterial({color : 0xFFFF00, wireframe : false});
-const plane = new THREE.Mesh(plane_geometry, plane_material);
+const plane1_geometry = new THREE.PlaneGeometry(100, 100, 100, 100);
+const plane1_material = new THREE.MeshPhongMaterial({color : 0xFFFF00, wireframe : false});
+const plane1 = new THREE.Mesh(plane1_geometry, plane1_material);
 
-for (let i = 0; i < plane_geometry.vertices.length; i++) {
-    const element = plane_geometry.vertices[i];
+for (let i = 0; i < plane1_geometry.vertices.length; i++) {
+    const element = plane1_geometry.vertices[i];
     element.z = 20 * noise2D(element.x/20, element.y/20);
 }
-plane_geometry.computeVertexNormals();
+plane1_geometry.computeVertexNormals();
 
-scene.add(plane);
+//scene.add(plane1);
+
+const plane2_v_shade = `
+varying vec4 color;
+varying float z;
+
+void main() {
+    z = position.z;
+    if (z < 0.0) {
+        z = 0.0;
+    }
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xy, z, 1.0);
+
+    if (z <= 0.0) {
+        color = vec4(0.0, 0.0, 1.0, 1.0);
+    } else if (z < 10.0) {
+        color = vec4(0.0, 1.0, 0.0, 1.0);
+    } else if (true) {
+        color = vec4(0.6, 0.6, 0.6, 0.0);
+    } else {
+        //discard;
+    }
+}
+`;
+
+const plane2_f_shade = `
+varying vec4 color;
+varying float z;
+
+void main() {
+    gl_FragColor = color;
+}
+`;
+
+const plane2_geometry = new THREE.PlaneGeometry(100, 100, 20, 20);
+const plane2_material = new THREE.ShaderMaterial({
+    vertexShader: plane2_v_shade,
+    fragmentShader: plane2_f_shade,
+});
+
+for (let i = 0; i < plane2_geometry.vertices.length; i++) {
+    const element = plane2_geometry.vertices[i];
+    element.z = 20 * noise2D(element.x/20, element.y/20);
+}
+plane2_geometry.computeVertexNormals();
+const plane2 = new THREE.Mesh(plane2_geometry, plane2_material);
+
+scene.add(plane2);
 
 const dir_light = new THREE.DirectionalLight(0xAAAAAA, 0.5);
 dir_light.position.set(0,1,1);
