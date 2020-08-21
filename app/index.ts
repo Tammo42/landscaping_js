@@ -30,7 +30,7 @@ const line_geometry = new THREE.BufferGeometry().setFromPoints(points);
 const line_material = new THREE.LineBasicMaterial({color : 0x0000FF});
 const line = new THREE.Line(line_geometry, line_material);
 
-scene.add(line);
+//scene.add(line);
 
 const plane1_geometry = new THREE.PlaneGeometry(100, 100, 100, 100);
 const plane1_material = new THREE.MeshPhongMaterial({color : 0xFFFF00, wireframe : false});
@@ -74,7 +74,7 @@ void main() {
 }
 `;
 
-const plane2_geometry = new THREE.PlaneGeometry(100, 100, 20, 20);
+const plane2_geometry = new THREE.PlaneGeometry(100, 100, 50, 50);
 const plane2_material = new THREE.ShaderMaterial({
     uniforms: {
         maxHeight: {value: 20}
