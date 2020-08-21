@@ -97,6 +97,18 @@ dir_light.position.set(0,1,1);
 
 scene.add(dir_light);
 
+const fpsDisplay = document.createElement('div');
+document.body.appendChild(fpsDisplay);
+fpsDisplay.style.position = 'absolute';
+fpsDisplay.style.top = '0';
+fpsDisplay.style.left = '0';
+fpsDisplay.style.backgroundColor = '#4444ff';
+fpsDisplay.style.width = '5ch';
+fpsDisplay.style.textAlign = 'center';
+fpsDisplay.innerText = '/';
+let fpsTime = window.performance.now();
+let frames = 0;
+
 let time = 0;
 const animate = function () {
     requestAnimationFrame(animate);
@@ -111,6 +123,16 @@ const animate = function () {
     }
     plane2_geometry.verticesNeedUpdate = true;
     time += 0.01;
+
+    frames++;
+
+    let newFPSTime = window.performance.now();
+    let diff = newFPSTime - fpsTime;
+    if(diff > 1000) {
+        fpsDisplay.innerText = ''+frames;
+        fpsTime = newFPSTime;
+        frames = 0;
+    }
 
     renderer.render(scene, camera);
 };
