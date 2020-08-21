@@ -54,16 +54,6 @@ void main() {
         z = 0.0;
     }
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xy, z, 1.0);
-
-    if (z <= 0.0) {
-        color = vec4(0.0, 0.0, 1.0, 1.0);
-    } else if (z < 10.0) {
-        color = vec4(0.0, 1.0, 0.0, 1.0);
-    } else if (true) {
-        color = vec4(0.6, 0.6, 0.6, 0.0);
-    } else {
-        //discard;
-    }
 }
 `;
 
@@ -72,7 +62,15 @@ varying vec4 color;
 varying float z;
 
 void main() {
-    gl_FragColor = color;
+    if (z <= 0.0) {
+        gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
+    } else if (z < 10.0) {
+        gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
+    } else if (true) {
+        gl_FragColor = vec4(0.6, 0.6, 0.6, 0.0);
+    } else {
+        discard;
+    }
 }
 `;
 
