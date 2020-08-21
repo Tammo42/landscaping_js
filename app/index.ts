@@ -47,13 +47,15 @@ plane1_geometry.computeVertexNormals();
 const plane2_v_shade = `
 varying vec4 color;
 varying float z;
+uniform float maxHeight;
 
 void main() {
     z = position.z;
-    if (z < 0.0) {
-        z = 0.0;
+    if (z < -0.2) {
+        z = -0.2;
     }
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xy, z, 1.0);
+    z = z / maxHeight;
 }
 `;
 
@@ -62,20 +64,21 @@ varying vec4 color;
 varying float z;
 
 void main() {
-    if (z <= 0.0) {
-        gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
-    } else if (z < 10.0) {
-        gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
-    } else if (true) {
-        gl_FragColor = vec4(0.6, 0.6, 0.6, 0.0);
-    } else {
-        discard;
-    }
+    vec3 step_color;
+    step_color = mix(vec3(0.0, 0.0, 1.0), vec3(1.0, 1.0 , 0.0), smoothstep(0.0, 0.1, z));
+    step_color = mix(step_color, vec3(0.0, 1.0, 0.0), smoothstep(0.1, 0.2, z));
+    step_color = mix(step_color, vec3(0.5, 0.5, 0.5), smoothstep(0.2, 0.5, z));
+    step_color = mix(step_color, vec3(1.0, 1.0, 1.0), smoothstep(0.5, 0.7, z));
+
+    gl_FragColor = vec4(step_color, 1.0);
 }
 `;
 
 const plane2_geometry = new THREE.PlaneGeometry(100, 100, 20, 20);
 const plane2_material = new THREE.ShaderMaterial({
+    uniforms: {
+        maxHeight: {value: 20}
+    },
     vertexShader: plane2_v_shade,
     fragmentShader: plane2_f_shade,
 });
