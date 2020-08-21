@@ -97,13 +97,24 @@ dir_light.position.set(0,1,1);
 
 scene.add(dir_light);
 
-var animate = function () {
-    //requestAnimationFrame(animate);
+let time = 0;
+const animate = function () {
+    requestAnimationFrame(animate);
 
     //cube.rotation.x += 0.01;
     //cube.rotation.y += 0.01;
+    for (let i = 0; i < plane2_geometry.vertices.length; i++) {
+        const element = plane2_geometry.vertices[i];
+        element.z =
+            20 * noise2D(element.x/20+Math.sin(time), element.y/20+time)
+            + 2 * noise2D((element.x/20+Math.sin(time))*5, (element.y/20+time)*5);
+    }
+    plane2_geometry.verticesNeedUpdate = true;
+    time += 0.01;
 
     renderer.render(scene, camera);
 };
 
 animate();
+
+window.THREE = THREE;
